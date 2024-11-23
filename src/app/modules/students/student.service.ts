@@ -1,11 +1,21 @@
-import { StudentMOdel } from "../student.model";
+import { StudentModel } from "../student.model";
 import { Student } from "./student.iterface";
 
-const createStudentIntoDB = async(student: Student) =>{
+// const createStudentIntoDB = async(student: Student) =>{
 
-    await StudentMOdel.create(student)
+//    const result = await StudentModel.create(student);
+//     return result;
+// }
+
+
+// export const  studentService = {
+//     createStudentIntoDB
+// }
+
+const createStudentIntoDB = async(student: Student)=>{
+    const result  = await StudentModel.create(student);
+    return result;
 }
-
-export const  studentService = {
-    createStudentIntoDB
+export const studentService = {
+    createStudentIntoDB: createStudentIntoDB
 }

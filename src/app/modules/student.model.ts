@@ -19,7 +19,6 @@ const nameSchema = new Schema<UserName>(
      }
 )
 
-//guardian schema
 const guardian  = new Schema<Guardian>(
     {
         fatherName: {
@@ -49,7 +48,6 @@ const guardian  = new Schema<Guardian>(
      }
 )
 
-//local guardian schema
 const localGuardian = new Schema<LocalGuardian>(
     {
         name: {
@@ -72,7 +70,6 @@ const localGuardian = new Schema<LocalGuardian>(
 )
 
 
-// ----------------------------------
 const studentSchema = new Schema<Student>({
      id: {type: String},
      name: nameSchema,
@@ -91,6 +88,6 @@ const studentSchema = new Schema<Student>({
      
 })
 
-// export const StudentModel  = model<Student>('Student',studentSchema);
-export const StudentMOdel = model<Student>('Student',studentSchema)
+export const StudentModel = model<Student>('Student',studentSchema);
+
 
