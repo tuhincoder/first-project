@@ -100,7 +100,7 @@ const studentSchema = new Schema<Student>({
      gender:{
         type: String,
         enum:{
-           values:["male" ,"female"],
+           values:["male" ,"female","other"],
             message: '{value} is not valid gender'
         } ,
         required: [true, 'gender is required']
