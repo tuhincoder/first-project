@@ -6,3 +6,4 @@
 
 //creating an instance method
 // 2. methods
+//3. password hash

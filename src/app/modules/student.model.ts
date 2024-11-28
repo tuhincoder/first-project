@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import validator from 'validator';
+
 import {
   TGuardian,
   TLocalGuardian,
@@ -8,6 +10,8 @@ import {
   StudentModel,
   TUserName as TUserName,
 } from './students/student.iterface';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
 const nameSchema = new Schema<TUserName>({
   firstName: {
@@ -91,6 +95,11 @@ const localGuardian = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, required: true, unique: true },
+  password: {
+    type: String,
+    required: [true, 'password is required'],
+    maxlength: [20, 'password is more than 20 letters'],
+  },
   name: {
     type: nameSchema,
     required: true,
@@ -140,8 +149,25 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     default: 'active',
   },
 });
+// pre save middleWare/ hook : will work on create() save()
+studentSchema.pre('save', async function (next) {
+  // console.log(this, 'post hook : we saved our data');
+  //hashing password and save into DB
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
 
-//for creating an static method
+studentSchema.post('save', function (doc, next) {
+  doc.password = '';
+  // console.log('post hook : we save our data');
+  next();
+});
+
+//for creating an custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
   const existsUser = await Student.findOne({ id });
   return existsUser;
