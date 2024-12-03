@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import validator from 'validator';
+// import { TUserName } from './student.iterface';
 
 import {
   TGuardian,
   TLocalGuardian,
   TStudent,
-  StudentMethods,
   StudentModel,
   TUserName as TUserName,
-} from './students/student.iterface';
+} from './student.iterface';
 import bcrypt from 'bcrypt';
-import config from '../config';
+import config from '../../config';
+// import config from './config';
 
 const nameSchema = new Schema<TUserName>({
   firstName: {
@@ -93,62 +94,71 @@ const localGuardian = new Schema<TLocalGuardian>({
   },
 });
 
-const studentSchema = new Schema<TStudent, StudentModel>({
-  id: { type: String, required: true, unique: true },
-  password: {
-    type: String,
-    required: [true, 'password is required'],
-    maxlength: [20, 'password is more than 20 letters'],
-  },
-  name: {
-    type: nameSchema,
-    required: true,
-  },
-  gender: {
-    type: String,
-    enum: {
-      values: ['male', 'female', 'other'],
-      message: '{value} is not valid gender',
+const studentSchema = new Schema<TStudent, StudentModel>(
+  {
+    id: { type: String, required: [true, 'Id is required'], unique: true },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'user Id is required'],
+      unique: true,
+      ref: 'User',
     },
-    required: [true, 'gender is required'],
+    password: {
+      type: String,
+      required: [true, 'password is required'],
+      maxlength: [20, 'password is more than 20 letters'],
+    },
+    name: {
+      type: nameSchema,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: {
+        values: ['male', 'female', 'other'],
+        message: '{value} is not valid gender',
+      },
+      required: [true, 'gender is required'],
+    },
+    dateOfBirth: { type: String },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: (value: string) => validator.isEmail(value),
+        message: '{VALUE} is not valid email',
+      },
+    },
+    contactNo: { type: String, required: true },
+    emergencyContactNO: { type: String, required: true },
+    bloodGroup: {
+      type: String,
+      enum: {
+        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+        message:
+          "The gender field can only be one of the following: 'male, 'female' or 'other' ",
+      },
+    },
+    presentAddress: { type: String, required: true },
+    permanentAddress: { type: String, required: true },
+    guardian: {
+      type: guardian,
+      required: true,
+    },
+    localGuardian: {
+      type: localGuardian,
+      required: true,
+    },
+    profileImg: { type: String },
+    isDeleted: { type: Boolean, default: false },
   },
-  dateOfBirth: { type: String },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: (value: string) => validator.isEmail(value),
-      message: '{VALUE} is not valid email',
+  {
+    toJSON: {
+      virtuals: true,
     },
   },
-  contactNo: { type: String, required: true },
-  emergencyContactNO: { type: String, required: true },
-  bloodGroup: {
-    type: String,
-    enum: {
-      values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-      message:
-        "The gender field can only be one of the following: 'male, 'female' or 'other' ",
-    },
-  },
-  presentAddress: { type: String, required: true },
-  permanentAddress: { type: String, required: true },
-  guardian: {
-    type: guardian,
-    required: true,
-  },
-  localGuardian: {
-    type: localGuardian,
-    required: true,
-  },
-  profileImg: { type: String },
-  isActive: {
-    type: String,
-    enum: ['active', 'block'],
-    default: 'active',
-  },
-});
+);
 // pre save middleWare/ hook : will work on create() save()
 studentSchema.pre('save', async function (next) {
   // console.log(this, 'post hook : we saved our data');
