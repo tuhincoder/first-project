@@ -1,14 +1,8 @@
-import { NextFunction, RequestHandler } from 'express';
+import catchAsync from '../../utils/catchAcync';
 import { studentService } from './student.service';
 
-const catchAsync = (fn: RequestHandler) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch((err) => next(err));
-  };
-};
-
 //
-const getStudent = catchAsync(async (req, res, next) => {
+const getStudent = catchAsync(async (req, res) => {
   const result = await studentService.getStudentIntoDB();
   res.status(200).json({
     success: true,
@@ -19,7 +13,7 @@ const getStudent = catchAsync(async (req, res, next) => {
 
 // single data
 
-const getStudentSingleData = catchAsync(async (req, res, next) => {
+const getStudentSingleData = catchAsync(async (req, res) => {
   const { studentId } = req.params;
   const result = await studentService.getSingleStudentIntoDB(studentId);
   res.status(200).json({
