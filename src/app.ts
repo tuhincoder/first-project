@@ -1,7 +1,8 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { studentRoutes } from './app/modules/students/student.route';
-import { userRoutes } from './app/modules/user/user.route';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
 
 const app: Application = express();
 
@@ -9,14 +10,9 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/v1/students', studentRoutes);
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1', router);
 
-// const getAController = (req: Request, res: Response) => {
-//     const a = 10;
-//     res.send(a)
-// }
-
-// app.get('/api/v1/students', getAController)
+app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;

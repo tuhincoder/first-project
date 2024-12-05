@@ -10,8 +10,7 @@ import {
   StudentModel,
   TUserName as TUserName,
 } from './student.iterface';
-import bcrypt from 'bcrypt';
-import config from '../../config';
+
 // import config from './config';
 
 const nameSchema = new Schema<TUserName>({
@@ -20,13 +19,13 @@ const nameSchema = new Schema<TUserName>({
     required: [true, 'first name is required'],
     trim: true,
     maxlength: [20, 'first name can not be more than 20 characters'],
-    validate: {
-      validator: function (value) {
-        const firstNameStr = value.charAt(0).toUppercase() + value.slice(1);
-        return firstNameStr === value;
-      },
-      message: '{VALUE} is not in capitalize formate',
-    },
+    // validate: {
+    //   validator: function (value) {
+    //     const firstNameStr = value.charAt(0).toUppercase() + value.slice(1);
+    //     return firstNameStr === value;
+    //   },
+    //   message: '{VALUE} is not in capitalize formate',
+    // },
   },
   middleName: {
     type: String,
@@ -93,7 +92,7 @@ const localGuardian = new Schema<TLocalGuardian>({
     required: true,
   },
 });
-
+//main schema
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
     id: { type: String, required: [true, 'Id is required'], unique: true },
@@ -103,11 +102,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       unique: true,
       ref: 'User',
     },
-    password: {
-      type: String,
-      required: [true, 'password is required'],
-      maxlength: [20, 'password is more than 20 letters'],
-    },
+    // password: {
+    //   type: String,
+    //   required: [true, 'password is required'],
+    //   maxlength: [20, 'password is more than 20 letters'],
+    // },
     name: {
       type: nameSchema,
       required: true,
@@ -159,23 +158,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
   },
 );
-// pre save middleWare/ hook : will work on create() save()
-studentSchema.pre('save', async function (next) {
-  // console.log(this, 'post hook : we saved our data');
-  //hashing password and save into DB
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-studentSchema.post('save', function (doc, next) {
-  doc.password = '';
-  // console.log('post hook : we save our data');
-  next();
-});
 
 //for creating an custom static method
 studentSchema.statics.isUserExists = async function (id: string) {

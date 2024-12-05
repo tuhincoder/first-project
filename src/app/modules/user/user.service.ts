@@ -18,7 +18,7 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   const newUser = await User.create(userData); // build in static method
 
   //create a student
-  if (Object.keys(newUser)) {
+  if (Object.keys(newUser).length) {
     //set id, _id as user
     studentData.id = newUser.id;
     studentData.user = newUser._id;
@@ -27,6 +27,6 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   }
 };
 
-export const userServices = {
+export const UserServices = {
   createStudentIntoDB,
 };
