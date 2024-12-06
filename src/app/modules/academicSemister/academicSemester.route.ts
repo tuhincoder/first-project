@@ -1,5 +1,5 @@
 import express from 'express';
-import { academicSemesterController } from './academicSemester.controller';
+import { AcademicSemesterController } from './academicSemester.controller';
 import validationRequest from '../../middlewares/validationRequest';
 import { AcademicSemesterValidation } from './academicSemester.validation';
 
@@ -10,7 +10,15 @@ router.post(
   validationRequest(
     AcademicSemesterValidation.createAcademicSemesterValidation,
   ),
-  academicSemesterController.createAcademicSemester,
+  AcademicSemesterController.createAcademicSemester,
 );
 
-export const academicSemester = router;
+//get all Academic semester route
+router.get('/', AcademicSemesterController.getAllAcaDemicSemester);
+
+//get single data from mongodb
+router.get(
+  '/:semesterId',
+  AcademicSemesterController.getSingleAcademicSemester,
+);
+export const AcademicSemesterRoute = router;
