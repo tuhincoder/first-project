@@ -23,6 +23,7 @@ export type TLocalGuardian = {
   address: string;
 };
 
+//student interface
 export type TStudent = {
   id: string;
   user: Types.ObjectId;
@@ -33,13 +34,14 @@ export type TStudent = {
   email: string;
   contactNo: string;
   emergencyContactNO: string;
-  bloodGroup: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   admissionSemester: Types.ObjectId;
   profileImg?: string;
+  academicDepartment: Types.ObjectId;
   isDeleted: boolean;
 };
 // for creating an static method

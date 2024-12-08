@@ -10,6 +10,7 @@ import {
   StudentModel,
   TUserName as TUserName,
 } from './student.iterface';
+import { ref } from 'joi';
 
 // import config from './config';
 
@@ -31,7 +32,6 @@ const nameSchema = new Schema<TUserName>({
     type: String,
     trim: true,
     required: [true, 'middle name is required'],
-    minlength: [5, 'middle name is les than 5 characters'],
     // validate: {
     //     validator: (value: string) =>validator.isAlpha(value),
     //     message: '{VALUE} is not valid'
@@ -92,6 +92,8 @@ const localGuardian = new Schema<TLocalGuardian>({
     required: true,
   },
 });
+
+//------------------------
 //main schema
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
@@ -124,10 +126,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       type: String,
       required: true,
       unique: true,
-      validate: {
-        validator: (value: string) => validator.isEmail(value),
-        message: '{VALUE} is not valid email',
-      },
     },
     contactNo: { type: String, required: true },
     emergencyContactNO: { type: String, required: true },
@@ -154,6 +152,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       ref: 'AcademicSemester',
     },
     profileImg: { type: String },
+    academicDepartment: {
+      //
+      type: Schema.Types.ObjectId,
+      ref: 'academicDepartment',
+    },
     isDeleted: { type: Boolean, default: false },
   },
   {
