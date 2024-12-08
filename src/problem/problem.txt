@@ -16,6 +16,10 @@ solve:
 -----------------------
 5. problem -> go to academic semester file
 * create and update
+6. finById -> go to academic faculty file
+*get single data -> problem is id or _id
+
+7. indexing
 
 
 
