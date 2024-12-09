@@ -1,5 +1,10 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 
+const catchAsync = (fn: RequestHandler) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    Promise.resolve(fn(req, res, next)).catch((err) => next(err));
+  };
+};
 // const createStudent: RequestHandler = async (req, res, next) => {
 //   try {
 //     const { password, student: studentData } = req.body;
@@ -19,11 +24,5 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 //     next(err);
 //   }
 // };
-
-const catchAsync = (fn: RequestHandler) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch((err) => next(err));
-  };
-};
 
 export default catchAsync;
