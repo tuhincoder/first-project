@@ -3,13 +3,19 @@ import { AcademicDepartment } from './academicDepartment.model';
 
 //create academic department in to db
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
+  // const isDepartmentExists = await AcademicDepartment.findOne({
+  //   name: payload.name,
+  // });
+  // if (isDepartmentExists) {
+  //   throw new Error('Academic department is already exists');
+  // }
   const result = await AcademicDepartment.create(payload);
   return result;
 };
 
 //get All academic department
 const getAllAcademicDepartmentFromDB = async () => {
-  const result = await AcademicDepartment.find();
+  const result = await AcademicDepartment.find().populate('academicFaculties');
   return result;
 };
 
