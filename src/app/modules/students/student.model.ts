@@ -10,7 +10,6 @@ import {
   StudentModel,
   TUserName as TUserName,
 } from './student.iterface';
-import { ref } from 'joi';
 
 // import config from './config';
 
@@ -165,6 +164,8 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
   },
 );
+
+//
 
 //for creating an custom static method
 studentSchema.statics.isUserExists = async function (id: string) {
