@@ -13,7 +13,7 @@ app.use(cors());
 const test = async (req: Request, res: Response) => {
   Promise.reject();
 };
-// test();
+test();
 //=======
 app.use('/api/v1', router);
 
