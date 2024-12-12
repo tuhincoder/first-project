@@ -21,6 +21,9 @@ solve:
 
 7. indexing
 
+8. mongos error handler -> go to handleValidationError
+* why is validator error
+
 
 
 

@@ -6,6 +6,7 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
@@ -18,17 +19,17 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
 );
 
 //if same data in to the db so return the error validation
-academicDepartmentSchema.pre('save', async function (next) {
-  const isDepartmentExists = await AcademicDepartment.findOne({
-    name: this.name,
-  });
-  if (isDepartmentExists) {
-    throw new Error('this department is already exists');
-  }
-  next();
-});
+// academicDepartmentSchema.pre('save', async function (next) {
+//   const isDepartmentExists = await AcademicDepartment.findOne({
+//     name: this.name,
+//   });
+//   if (isDepartmentExists) {
+//     throw new Error('this department is already exists');
+//   }
+//   next();
+// });
 
-//update does not exists
+// update does not exists
 academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
   console.log(query);
