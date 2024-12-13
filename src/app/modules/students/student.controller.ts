@@ -1,10 +1,11 @@
+import { RequestHandler } from 'express';
 import catchAsync from '../../utils/catchAcync';
 import sendResponse from '../../utils/sendResponse';
 import { StudentService } from './student.service';
 
 //
-const getAllStudent = catchAsync(async (req, res) => {
-  const result = await StudentService.getAllStudentFromDB();
+const getAllStudent: RequestHandler = catchAsync(async (req, res) => {
+  const result = await StudentService.getAllStudentFromDB(req.query);
   res.status(200).json({
     success: true,
     message: 'get Student data successfully',
@@ -23,7 +24,7 @@ const getStudentSingleData = catchAsync(async (req, res) => {
   });
 });
 //student update
-const updateStudent = catchAsync(async (req, res) => {
+const updateStudent: RequestHandler = catchAsync(async (req, res) => {
   const { studentId } = req.params;
   const { student } = req.body;
   console.log(student);
