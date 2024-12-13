@@ -19,18 +19,32 @@ const getAllStudentFromDB = async (query: Record<string, unknown>) => {
   });
 
   //filtering
-  const excludeFields = ['searchTerm'];
+  const excludeFields = ['searchTerm', 'sort', 'limit'];
 
   excludeFields.forEach((el) => delete queryObj[el]);
   // console.log({ query, queryObj });
-  const result = await searchQuery
+  const filterQuery = searchQuery
     .find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
       populate: { path: 'academicFaculty' },
     });
-  return result;
+
+  let sort = '-createdAt';
+  if (query.sort) {
+    sort = query.sort as string;
+  }
+
+  const sortQuery = filterQuery.sort(sort);
+  let limit = 1;
+  if (query.limit) {
+    limit = Number(query.limit);
+  }
+
+  const limitQuery = await sortQuery.limit(limit);
+
+  return limitQuery;
 };
 
 //get single data
