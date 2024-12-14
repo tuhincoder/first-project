@@ -193,7 +193,14 @@ import {
   TLocalGuardian,
   TStudent,
   TUserName,
-} from './student.interface';
+} from './student.iterface';
+// import {
+//   StudentModel,
+//   TGuardian,
+//   TLocalGuardian,
+//   TStudent,
+//   TUserName,
+// } from './student.interface';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -243,7 +250,7 @@ const guardianSchema = new Schema<TGuardian>({
   },
 });
 
-const localGuradianSchema = new Schema<TLocalGuardian>({
+const localGuardianSchema = new Schema<TLocalGuardian>({
   name: {
     type: String,
     required: [true, 'Name is required'],
@@ -318,7 +325,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Guardian information is required'],
     },
     localGuardian: {
-      type: localGuradianSchema,
+      type: localGuardianSchema,
       required: [true, 'Local guardian information is required'],
     },
     profileImg: { type: String },
