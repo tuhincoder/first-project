@@ -29,4 +29,30 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
     return this;
   }
+  //sort
+  sort() {
+    const sort = this?.query?.sort || '-createdAt';
+    this.modelQuery = this.modelQuery.sort(sort as string);
+    return this;
+  }
+  // paginate
+  paginate() {
+    //
+    const page = Number(this?.query?.page) || 1;
+    const limit = Number(this?.query?.limit) || 10;
+    const skip = (page - 1) * limit;
+    this.modelQuery = this.modelQuery.skip(skip).limit(limit);
+    return this;
+  }
+  // fields
+  fields() {
+    //
+    const fields =
+      (this?.query?.fields as string).split(',').join(' ') || '-_v';
+
+    this.modelQuery = this.modelQuery.select(fields);
+    return this;
+  }
 }
+
+export default QueryBuilder;
