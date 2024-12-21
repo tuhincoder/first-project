@@ -1,4 +1,4 @@
-import { TBloodGroup, TGender } from './faculty.interface';
+import { TBloodGroup, TGender } from './admin.interface';
 
 export const Gender: TGender[] = ['male', 'female', 'other'];
 
@@ -12,8 +12,7 @@ export const BloodGroup: TBloodGroup[] = [
   'O+',
   'O-',
 ];
-
-export const FacultySearchableFields = [
+export const AdminSearchableFields = [
   'email',
   'id',
   'contactNo',

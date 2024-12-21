@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 import { TUser } from './user.interface';
 import config from '../../config';
@@ -38,6 +39,7 @@ const userSchema = new Schema<TUser>(
 );
 
 // pre save middleWare/ hook : will work on create() save()
+
 userSchema.pre('save', async function (next) {
   const user = this;
 

@@ -1,16 +1,3 @@
-// import { TAcademicSemester } from '../academicSemister/academicSemister.iterface';
-
-// //year semester 4 digit number
-// export const generateStudentId = (payload: TAcademicSemester) => {
-//   const currentId = (0).toString();
-//   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
-//   incrementId = `${payload.year} ${payload.code}${incrementId}`;
-
-//   return incrementId;
-// };
-
-// year semesterCode 4digit number
-
 import { TAcademicSemester } from '../academicSemister/academicSemister.iterface';
 import { User } from './user.model';
 

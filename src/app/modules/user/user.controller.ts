@@ -4,7 +4,7 @@ import catchAsync from '../../utils/catchAcync';
 
 const createStudent = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
-  
+
   const result = await UserServices.createStudentIntoDB(password, studentData);
   sendResponse(res, {
     statusCode: 200,
@@ -14,16 +14,11 @@ const createStudent = catchAsync(async (req, res) => {
   });
 });
 
-
-
-
-
-
 //create faulty
-const createFaculty = catchAsync(async (req, res) => {
-  const { password, faculty: facultyData};
-  const result =await  
-});
+// const createFaculty = catchAsync(async (req, res) => {
+//   const { password, faculty: facultyData};
+//   const result =await
+// });
 
 // const createStudent: RequestHandler = async (req, res, next) => {
 //   try {
