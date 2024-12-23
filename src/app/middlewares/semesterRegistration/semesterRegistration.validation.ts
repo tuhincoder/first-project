@@ -1,10 +1,17 @@
-import { Types } from 'mongoose';
+import { z } from 'zod';
+import { SemesterRegistrationStatus } from './semesterRegistration.constant';
 
-export type TSemesterRegistration = {
-  academicSemester: Types.ObjectId;
-  status: 'UPCOMING' | 'ONGOING' | 'ENDED';
-  startDate: Date;
-  endDate: Date;
-  minCredit: number;
-  maxCredit: number;
+const createRegistrationValidationSchema = z.object({
+  body: z.object({
+    academicSemester: z.string(),
+    status: z.enum([...(SemesterRegistrationStatus as [string, ...string[]])]),
+    startDate: z.string().datetime(),
+    endDate: z.string().datetime(),
+    minCredit: z.number(),
+    maxCredit: z.number(),
+  }),
+});
+
+export const SemesterRegistrationValidation = {
+  createRegistrationValidationSchema,
 };
