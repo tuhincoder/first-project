@@ -1,5 +1,5 @@
 import express from 'express';
-import validationRequest from '../validationRequest';
+import validationRequest from '../../middlewares/validationRequest';
 
 import { SemesterRegistrationController } from './semesterRegistration.controller';
 import { SemesterRegistrationValidations } from './semesterRegistration.validation';
@@ -25,7 +25,7 @@ router.get(
 
 //update semester registration route
 router.patch(
-  '/',
+  '/:id',
   validationRequest(
     SemesterRegistrationValidations.updateSemesterRegistrationValidationSchema,
   ),
