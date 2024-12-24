@@ -1,3 +1,4 @@
+import QueryBuilder from '../../builder/QueryBuilder';
 import { AcademicSemester } from '../../modules/academicSemister/academicSemester.model';
 import { TSemesterRegistration } from './semesterRegistration.interface';
 import { SemesterRegistration } from './semesterRegistration.model';
@@ -6,8 +7,10 @@ import { SemesterRegistration } from './semesterRegistration.model';
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
 ) => {
+  console.log(payload);
   //check if the semester is exists
   const academicSemester = payload?.academicSemester;
+  console.log(academicSemester);
   const isAcademicSemester = await AcademicSemester.findById(academicSemester);
   if (!isAcademicSemester) {
     throw new Error('This academic semester not found');
@@ -24,13 +27,30 @@ const createSemesterRegistrationIntoDB = async (
 };
 
 //get all semester registration
-const getAllSemesterRegistrationFromDB = async () => {};
+const getAllSemesterRegistrationFromDB = async (
+  query: Record<string, unknown>,
+) => {
+  const semesterRegistrationQuery = new QueryBuilder(
+    SemesterRegistration.find().populate('academicSemester'),
+    query,
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await semesterRegistrationQuery.modelQuery;
+  return result;
+};
 
 //get single semester registration
-const getSingleSemesterRegistrationFromDB = async () => {};
+const getSingleSemesterRegistrationFromDB = async (id: string) => {
+  const result = await SemesterRegistration.findById(id);
+  return result;
+};
 
 //update semester registration
-const updateSemesterRegistrationIntoDB = async () => {};
+const updateSemesterRegistrationIntoDB = async (id: string) => {};
 
 export const SemesterRegistrationService = {
   createSemesterRegistrationIntoDB,
