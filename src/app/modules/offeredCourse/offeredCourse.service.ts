@@ -13,13 +13,22 @@ const getAllOfferedCourseFromDB = async (query: Record<string, unknown>) => {
 };
 
 //GET SINGLE OFFERED COURSE
-const getSingleOfferedCourse = async (id: string) => {
+const getSingleOfferedCourseFromDB = async (id: string) => {
   const result = await OfferedCourse.findById(id);
   return result;
 };
 
 //UPDATE OFFERED COURSE
-const updateOfferedCourse = async (id: string) => {
+const updateOfferedCourseIntoDB = async (
+  id: string,
+  payload: Partial<TOfferedCourse>,
+) => {
+  const result = await OfferedCourse.findByIdAndUpdate(id);
+  return result;
+};
+
+//DELETE OFFERED COURSE
+const deleteOfferedCourseFromDB = async (id: string) => {
   const result = await OfferedCourse.findByIdAndUpdate(id);
   return result;
 };
@@ -27,6 +36,7 @@ const updateOfferedCourse = async (id: string) => {
 export const OfferedCourseServices = {
   createOfferedCourseIntoDB,
   getAllOfferedCourseFromDB,
-  getSingleOfferedCourse,
-  updateOfferedCourse,
+  getSingleOfferedCourseFromDB,
+  updateOfferedCourseIntoDB,
+  deleteOfferedCourseFromDB,
 };

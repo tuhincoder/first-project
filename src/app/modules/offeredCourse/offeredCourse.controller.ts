@@ -33,7 +33,7 @@ const getAllOfferedCourse = catchAsync(async (req, res) => {
 //GET SINGLE OFFERED COURSE
 const getSingleOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await OfferedCourseServices.getSingleOfferedCourse(id);
+  const result = await OfferedCourseServices.getSingleOfferedCourseFromDB(id);
 
   sendResponse(res, {
     statusCode: 200,
@@ -46,7 +46,10 @@ const getSingleOfferedCourse = catchAsync(async (req, res) => {
 //UPDATE OFFERED
 const updateOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await OfferedCourseServices.updateOfferedCourse(id);
+  const result = await OfferedCourseServices.updateOfferedCourseIntoDB(
+    id,
+    req.body,
+  );
 
   sendResponse(res, {
     statusCode: 200,
@@ -55,9 +58,23 @@ const updateOfferedCourse = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+//OFFERED DELETE
+const deleteOfferedCourse = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await OfferedCourseServices.deleteOfferedCourseFromDB(id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'offered Course is delete',
+    data: result,
+  });
+});
 export const OfferedCourseController = {
   createOfferedCourse,
   getAllOfferedCourse,
   getSingleOfferedCourse,
   updateOfferedCourse,
+  deleteOfferedCourse,
 };
