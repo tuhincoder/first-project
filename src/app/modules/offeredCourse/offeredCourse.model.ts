@@ -29,11 +29,11 @@ const offeredCourseSchema = new Schema<TOfferedCourse>(
       required: true,
       ref: 'Course',
     },
-    faculty: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Faculty',
-    },
+    // faculty: {
+    //   type: Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: 'Faculty',
+    // },
     maxCapacity: {
       type: Number,
       required: true,
@@ -42,10 +42,12 @@ const offeredCourseSchema = new Schema<TOfferedCourse>(
       type: Number,
       required: true,
     },
-    days: {
-      type: String,
-      enum: Days,
-    },
+    days: [
+      {
+        type: String,
+        enum: Days,
+      },
+    ],
     startTime: {
       type: String,
       required: true,

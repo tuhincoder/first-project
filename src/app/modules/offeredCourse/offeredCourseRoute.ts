@@ -11,10 +11,10 @@ router.post(
   OfferedCourseController.createOfferedCourse,
 );
 //GET ALL COURSE
-router.get('/id:', OfferedCourseController.getAllOfferedCourse);
+router.get('/id:', OfferedCourseController.getSingleOfferedCourse);
 
 //GET SINGLE COURSE
-router.get('/', OfferedCourseController.getSingleOfferedCourse);
+router.get('/', OfferedCourseController.getAllOfferedCourse);
 
 //DELETE COURSE
 router.delete('/:id', OfferedCourseController.deleteOfferedCourse);
